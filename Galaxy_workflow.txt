@@ -1,0 +1,44 @@
+Input
+Raw data (fastqsanger.gz files) 
+- test_sample_R1
+- test_sample_R2
+-----------------------------
+
+# 1) Compute quality statistics (FASTX)
+"Creates quality statistics report for the given Solexa/FASTQ library."
+-i input file 
+test_sample_R1
+-o output file
+statistics.txt file
+
+##Job Runtime (Wall Clock)	8 minutes
+"The output file will contain the following fields:
+
+column = column number (1 to 36 for a 36-cycles read Solexa file)
+count = number of bases found in this column.
+min = Lowest quality score value found in this column.
+max = Highest quality score value found in this column.
+sum = Sum of quality score values for this column.
+mean = Mean quality score value for this column.
+Q1 = 1st quartile quality score.
+med = Median quality score.
+Q3 = 3rd quartile quality score.
+IQR = Inter-Quartile range (Q3-Q1).
+lW = 'Left-Whisker' value (for boxplotting).
+rW = 'Right-Whisker' value (for boxplotting).
+A_Count = Count of 'A' nucleotides found in this column.
+C_Count = Count of 'C' nucleotides found in this column.
+G_Count = Count of 'G' nucleotides found in this column.
+T_Count = Count of 'T' nucleotides found in this column.
+N_Count = Count of 'N' nucleotides found in this column."
+
+-----------------------------
+ 
+# 2) visualise QC data (FastQC)
+
+
+Input statistics text file from compute quality statistics
+Output
+https://usegalaxy.org/datasets/f9cad7b01a472135a897eb1d66684f41/preview
+https://usegalaxy.org/datasets/f9cad7b01a47213567a7ec09c0a51c37/preview
+##Job Runtime (Wall Clock)	6 minutes
