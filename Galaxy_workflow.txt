@@ -87,3 +87,15 @@ Lines total/split/realigned/skipped: 3147783/35901/310770/0
 ##Job Runtime (Wall Clock)	3 minutes
 
 --------------------------------
+
+# 7) Filter variant sites based on coverage
+BCFtools filter (Galaxy Version 1.15.1+galaxy2)
+
+FORMAT/DP > 10 & FORMAT/AO > 5 & FORMAT/AO / (FORMAT/AO + FORMAT/RO) > 0.15
+
+Input VCF file (data 160)
+Output VCF file (data 180)
+
+##Job Runtime (Wall Clock)	36 seconds
+
+--------------------------------
