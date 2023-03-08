@@ -66,3 +66,24 @@ Output: VCF file (data 154)
 
 --------------------------------
 
+# 6) Normalise (left align) and decompose variants
+Bcftools (Galaxy Version 1.15.1+galaxy2)
+Left-align and normalize indels; check if REF alleles match the reference; split multiallelic sites into multiple rows; recover multiallelics from multiple rows
+
+Reference genome = hg19
+When any REF allele does not match the reference genome base = exit with an error (-e)
+Atomize = False
+Left-align and normalize indels? = True
+Annotate modified records with INFO/STR indicating the original variant = old
+Perform deduplication for the folowing types of variant records = do not deduplicate any records
+~multiallelics = split multiallelic sites into biallelic records (-)
+split the following variant types = both
+
+Input: VCF (data 154)
+Output: VCF file (data 160)
+
+Lines total/split/realigned/skipped: 3147783/35901/310770/0
+
+##Job Runtime (Wall Clock)	3 minutes
+
+--------------------------------
