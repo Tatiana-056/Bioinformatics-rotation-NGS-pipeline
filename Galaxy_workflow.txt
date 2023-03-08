@@ -123,3 +123,12 @@ Output: Annotated VCF file
 ##Job Runtime (Wall Clock) unknown - less than an hour
 
 --------------------------------
+
+# 10) Filter annotated VCF for likely causative variants
+[in excel]
+
+filtered on gnomAD EXOMES AF <0.01,
+canonical transcript
+MODERATE and LOW impact variants
+
+= 8 candidate variants
