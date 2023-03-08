@@ -42,3 +42,8 @@ Output deduplicated BAM file (Data 85)
 ##Job Runtime (Wall Clock)	53 minutes
 
 --------------------------------
+
+# 4) BAM QC
+Picard
+
+
