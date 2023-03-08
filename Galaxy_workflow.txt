@@ -93,9 +93,21 @@ BCFtools filter (Galaxy Version 1.15.1+galaxy2)
 
 FORMAT/DP > 10 & FORMAT/AO > 5 & FORMAT/AO / (FORMAT/AO + FORMAT/RO) > 0.15
 
-Input VCF file (data 160)
-Output VCF file (data 180)
+Input: VCF file (data 160)
+Output: VCF file (data 180)
 
 ##Job Runtime (Wall Clock)	36 seconds
+
+--------------------------------
+
+# 8) Restrict variants to gene panel (dilated cardiomyopathy R132)
+BCFtools view (Galaxy Version 1.15.1+galaxy2)
+with UCSC BED file for cardio green genes
+Also remove non-variant sites (Exclude = FORMAT/GT = "RR")
+
+Input: VCF file (data 180)
+Output: VCF file (data 182)
+
+##Job Runtime (Wall Clock)	1 minute
 
 --------------------------------
