@@ -31,3 +31,14 @@ Output: BAM file (data 40)
 ##Job Runtime (Wall Clock)	3 hours and 25 minutes
 
 --------------------------------
+
+# 3) Remove PCR duplicates
+RmDup
+(Galaxy Version 2.0.1)
+
+Input: BAM from step above, treat as paired end
+Output deduplicated BAM file (Data 85) 
+
+##Job Runtime (Wall Clock)	53 minutes
+
+--------------------------------
