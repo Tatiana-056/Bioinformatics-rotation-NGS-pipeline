@@ -111,3 +111,15 @@ Output: VCF file (data 182)
 ##Job Runtime (Wall Clock)	1 minute
 
 --------------------------------
+
+# 9) Annotate variants with VEP
+VEP v109
+
+./vep --af --af_gnomade --af_gnomadg --appris --biotype --buffer_size 500 --canonical --check_existing --distance 5000 --hgvs --mane --merged --plugin SpliceAI,snv=[path_to]/spliceai_scores.masked.snv.hg19.vcf.gz,indel=[path_to]/spliceai_scores.masked.indel.hg19.vcf.gz --plugin CADD,[path_to]/CADD_GRCh37_1.6_whole_genome_SNVs.tsv.gz,[path_to]/CADD_GRCh37_1.6_InDels.tsv.gz --plugin MaxEntScan,[path_to]/maxentscan --polyphen b --protein --pubmed --regulatory --sift b --species homo_sapiens --symbol --transcript_version --tsl --cache --input_file [input_data] --output_file [output_file] --port 3337
+
+Input: VCF file (data 182)
+Output: Annotated VCF file 
+
+##Job Runtime (Wall Clock) unknown - less than an hour
+
+--------------------------------
