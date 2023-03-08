@@ -132,3 +132,7 @@ canonical transcript
 MODERATE and LOW impact variants
 
 = 8 candidate variants
+
+--------------------------------
+
+# 11) VCF QC metrics
