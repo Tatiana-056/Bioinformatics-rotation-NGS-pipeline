@@ -7,11 +7,27 @@ Raw data (fastqsanger.gz files)
 # 1) visualise QC data (FastQC)
 Plot quality reports for FASTQ files
 (Galaxy Version 0.73)
+
 Input: 2 X FASTQ files
 Output: summary file and webpage of plots
 https://usegalaxy.org/datasets/f9cad7b01a472135a897eb1d66684f41/preview
 https://usegalaxy.org/datasets/f9cad7b01a47213567a7ec09c0a51c37/preview
+
 ##Job Runtime (Wall Clock)	6 minutes
 
 --------------------------------
 
+# 2) Alignment
+Map with BWA-MEM
+- map medium and long reads (> 100 bp) against reference genome
+(Galaxy Version 0.7.17.2)
+Analysis mode - simple illumina mode
+BAM sorting by chromosomal coordinates
+Using reference hg19, paired end reads
+
+Input: 2 X FASTQ files (forward and reverse reads)
+Output: BAM file (data 40)
+
+##Job Runtime (Wall Clock)	3 hours and 25 minutes
+
+--------------------------------
