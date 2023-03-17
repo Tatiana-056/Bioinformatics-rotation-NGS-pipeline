@@ -140,3 +140,5 @@ MODERATE and LOW impact variants
 --------------------------------
 
 # 11) VCF QC metrics
+bcftools stats (1.15.1+htslib-1.15.1) 
+on the VCF files before (data 160) and after depth filtering (data 180)
