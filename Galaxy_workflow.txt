@@ -1,0 +1,144 @@
+Input
+Raw data (fastqsanger.gz files) 
+- test_sample_R1
+- test_sample_R2
+-----------------------------
+
+# 1) visualise QC data (FastQC)
+Plot quality reports for FASTQ files
+(Galaxy Version 0.73)
+
+Input: 2 X FASTQ files
+Output: summary file and webpage of plots
+https://usegalaxy.org/datasets/f9cad7b01a472135a897eb1d66684f41/preview
+https://usegalaxy.org/datasets/f9cad7b01a47213567a7ec09c0a51c37/preview
+
+##Job Runtime (Wall Clock)	6 minutes
+
+--------------------------------
+
+# 2) Alignment
+Map with BWA-MEM
+- map medium and long reads (> 100 bp) against reference genome
+(Galaxy Version 0.7.17.2)
+Analysis mode - simple illumina mode
+BAM sorting by chromosomal coordinates
+Using reference hg19, paired end reads
+
+Input: 2 X FASTQ files (forward and reverse reads)
+Output: BAM file (data 40)
+
+##Job Runtime (Wall Clock)	3 hours and 25 minutes
+
+--------------------------------
+
+# 3) Remove PCR duplicates
+RmDup
+(Galaxy Version 2.0.1)
+
+Input: BAM from step above, treat as paired end
+Output: deduplicated BAM file (Data 85) 
+
+##Job Runtime (Wall Clock)	53 minutes
+
+--------------------------------
+
+# 4) BAM QC
+Samtools stats 
+generate statistics for BAM dataset
+(Galaxy Version 2.0.4)
+
+Picard CollectInsertSizeMetrics 
+plots distribution of insert sizes 
+(Galaxy Version 2.18.2.1) 
+
+--------------------------------
+
+# 5) Call variants
+FreeBayes bayesian genetic variant detector
+(Galaxy Version 1.3.6+galaxy0)
+
+Using hg19 reference genome
+Used calling version 2 (same as #1 plus two additional options: 
+-0 (standard filters: --min-mapping-quality 30 --min-base-quality 20 --min-supporting-allele-qsum 0 --genotype-variant-threshold 0) and --min-coverage.
+Turn off left-alignment of indels = False
+
+Input: BAM file (data 85)
+Output: VCF file (data 154)
+
+##Job Runtime (Wall Clock)	17 minutes
+
+--------------------------------
+
+# 6) Normalise (left align) and decompose variants
+Bcftools (Galaxy Version 1.15.1+galaxy2)
+Left-align and normalize indels; check if REF alleles match the reference; split multiallelic sites into multiple rows; recover multiallelics from multiple rows
+
+Reference genome = hg19
+When any REF allele does not match the reference genome base = exit with an error (-e)
+Atomize = False
+Left-align and normalize indels? = True
+Annotate modified records with INFO/STR indicating the original variant = old
+Perform deduplication for the folowing types of variant records = do not deduplicate any records
+~multiallelics = split multiallelic sites into biallelic records (-)
+split the following variant types = both
+
+Input: VCF (data 154)
+Output: VCF file (data 160)
+
+Lines total/split/realigned/skipped: 3147783/35901/310770/0
+
+##Job Runtime (Wall Clock)	3 minutes
+
+--------------------------------
+
+# 7) Filter variant sites based on coverage
+BCFtools filter (Galaxy Version 1.15.1+galaxy2)
+
+FORMAT/DP > 10 & FORMAT/AO > 5 & FORMAT/AO / (FORMAT/AO + FORMAT/RO) > 0.15
+
+Input: VCF file (data 160)
+Output: VCF file (data 180)
+
+##Job Runtime (Wall Clock)	36 seconds
+
+--------------------------------
+
+# 8) Restrict variants to gene panel (dilated cardiomyopathy R132)
+BCFtools view (Galaxy Version 1.15.1+galaxy2)
+with UCSC BED file for cardio green genes
+Also remove non-variant sites (Exclude = FORMAT/GT = "RR")
+
+Input: VCF file (data 180)
+Output: VCF file (data 182)
+
+##Job Runtime (Wall Clock)	1 minute
+
+--------------------------------
+
+# 9) Annotate variants with VEP
+VEP v109
+
+./vep --af --af_gnomade --af_gnomadg --appris --biotype --buffer_size 500 --canonical --check_existing --distance 5000 --hgvs --mane --merged --plugin SpliceAI,snv=[path_to]/spliceai_scores.masked.snv.hg19.vcf.gz,indel=[path_to]/spliceai_scores.masked.indel.hg19.vcf.gz --plugin CADD,[path_to]/CADD_GRCh37_1.6_whole_genome_SNVs.tsv.gz,[path_to]/CADD_GRCh37_1.6_InDels.tsv.gz --plugin MaxEntScan,[path_to]/maxentscan --polyphen b --protein --pubmed --regulatory --sift b --species homo_sapiens --symbol --transcript_version --tsl --cache --input_file [input_data] --output_file [output_file] --port 3337
+
+Input: VCF file (data 182)
+Output: Annotated VCF file 
+
+##Job Runtime (Wall Clock) unknown - less than an hour
+
+--------------------------------
+
+# 10) Filter annotated VCF for likely causative variants
+[in excel]
+
+filtered on gnomAD EXOMES AF <0.01,
+canonical transcript
+MODERATE and LOW impact variants
+
+= 8 candidate variants
+
+--------------------------------
+
+# 11) VCF QC metrics
+bcftools stats (1.15.1+htslib-1.15.1) 
+on the VCF files before (data 160) and after depth filtering (data 180)
