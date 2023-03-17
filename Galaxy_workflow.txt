@@ -44,9 +44,13 @@ Output: deduplicated BAM file (Data 85)
 --------------------------------
 
 # 4) BAM QC
-Picard
+Samtools stats 
+generate statistics for BAM dataset
+(Galaxy Version 2.0.4)
 
-
+Picard CollectInsertSizeMetrics 
+plots distribution of insert sizes 
+(Galaxy Version 2.18.2.1) 
 
 --------------------------------
 
